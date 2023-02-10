@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useRef, useState } from "react";
 import {
   Card as CardStyled,
   ButtonX,
@@ -20,15 +20,19 @@ const Card: FC<ICard> = ({
   likes,
 }) => {
   const [onOrOff, setOnOrOff] = useState(false);
-  const [text, setText] = useState("");
+  const [text, setText] = useState(children);
+
+  const elText = useRef<HTMLDivElement | null>(null);
 
   const change = () => {
     setOnOrOff(true);
   };
 
   const onBlurCard = () => {
-    if (text === "") {
-      onEdit(id);
+    const newText = (elText.current as HTMLDivElement).textContent;
+    if (newText !== text) {
+      setText(newText);
+      onEdit(id, newText as string);
     }
     setOnOrOff(false);
   };
@@ -42,8 +46,9 @@ const Card: FC<ICard> = ({
           change();
         }}
         onBlur={onBlurCard}
+        ref={elText}
       >
-        {children}
+        {text}
       </WrapperText>
 
       <ButtonX

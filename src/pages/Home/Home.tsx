@@ -3,11 +3,11 @@ import { WrapperPrincipal } from "@components/WrapperPrincipal";
 import { Columns } from "./Home.styled";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { CardList } from "@components/CardList";
 import { Card, ICard, TAction } from "@components/Card";
+import { ICardApp } from "./Home.d";
 
 const Home = () => {
-  const [cardList, setCardList] = useState<ICard[]>([]);
+  const [cardList, setCardList] = useState<ICardApp[]>([]);
 
   const handerOnClose = (id: string) => {
     const newCArd = [...cardList];
@@ -25,14 +25,13 @@ const Home = () => {
     setCardList(newCard);
   };
 
-  const handlerOnEdit = (id: string) => {
+  const handlerOnEdit = (id: string, text: string) => {
     const newCard = [...cardList];
     const indexFound = newCard.findIndex((item) => item.id === id);
     const cardModify = newCard[indexFound];
-    console.log(cardModify.children);
-    // const card = { ...cardModify, children: cardModify.children };
-    // newCard.splice(indexFound, 1, card);
-    // setCardList(newCard);
+    const card = { ...cardModify, children: text };
+    newCard.splice(indexFound, 1, card);
+    setCardList(newCard);
   };
 
   const addCard = () => {
@@ -41,19 +40,20 @@ const Home = () => {
       variant: "" as TAction,
       likes: 0,
       children: "",
-      onLike: handleOnLike,
-      onClose: handerOnClose,
-      onEdit: handlerOnEdit,
     };
     setCardList([...cardList, newCard]);
   };
+
+  useEffect(() => {
+    console.log(cardList);
+  }, [cardList]);
 
   return (
     <WrapperPrincipal>
       <Columns>
         <AddButton onClick={addCard}>Went well</AddButton>
         <ul>
-          {cardList.map(({ id, children, likes }: ICard) => (
+          {cardList.map(({ id, children, likes }: ICardApp) => (
             <Card
               id={id}
               key={`item-${id}`}

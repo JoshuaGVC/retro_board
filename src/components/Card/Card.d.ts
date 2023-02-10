@@ -9,5 +9,5 @@ export interface ICard {
   likes: number;
   onClose: (id: string) => void;
   onLike: (id: string) => void;
-  onEdit: (id: string) => void;
+  onEdit: (id: string, text: string) => void;
 }

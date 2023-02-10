@@ -40,6 +40,7 @@ const Card: FC<ICard> = ({
   return (
     <CardStyled color={variant} id={id}>
       <WrapperText
+        role="editCard"
         suppressContentEditableWarning={true}
         contentEditable={onOrOff}
         onDoubleClick={() => {

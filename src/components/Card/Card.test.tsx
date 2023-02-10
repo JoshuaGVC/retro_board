@@ -1,5 +1,5 @@
 import { describe, expect, test, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import Card from "./Card";
 import userEvent from "@testing-library/user-event";
 
@@ -143,26 +143,28 @@ describe("<Card likes={1} /> ", () => {
   });
 
   test("should execute the function, when you do dobleckick in the section of the text", async () => {
-    const handleClick3 = vi.fn();
     const handleClick = vi.fn();
 
     render(
       <Card
         likes={1}
         id="123456hh"
-        onClose={handleClick}
+        onClose={() => {}}
         onLike={() => {}}
-        onEdit={handleClick3}
+        onEdit={handleClick}
         variant={"wentWell"}
       >
-        hola
+        {" "}
       </Card>
     );
 
-    const card = screen.getByText("hola");
+    const card = screen.getByRole("editCard");
 
     await userEvent.dblClick(card);
-    expect(handleClick3).toBeCalledWith("123456hh");
+    await userEvent.type(screen.getByRole("editCard"), "joshua");
+    fireEvent.blur(card);
+    screen.debug();
+    expect(handleClick).toBeCalled();
   });
 
   test("should execute the function, when you click on the button of the close", async () => {

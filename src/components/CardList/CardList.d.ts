@@ -1,6 +1,6 @@
 import { ICard } from "../Card";
 
-export interface ICardList {
+export interface ICardList
+  extends Pick<ICard, "onClose" | "onLike" | "onEdit"> {
   items: ICard[];
-  actionCard: ICard.onLike;
 }

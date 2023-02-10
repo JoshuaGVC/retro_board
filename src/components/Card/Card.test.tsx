@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import Card from "./Card";
 import userEvent from "@testing-library/user-event";
 
-describe("<Card likes={1} /> ", () => {
+describe("<Card/> ", () => {
   test("should show the content per default, when render the card", () => {
     render(
       <Card

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Card, ICard, TAction } from "@components/Card";
 import { ICardApp } from "./Home.d";
+import { CardList } from "@components/CardList";
 
 const Home = () => {
   const [cardList, setCardList] = useState<ICardApp[]>([]);
@@ -37,36 +38,25 @@ const Home = () => {
   const addCard = () => {
     const newCard = {
       id: crypto.randomUUID(),
-      variant: "" as TAction,
+      variant: "wentWell" as TAction,
       likes: 0,
       children: "",
     };
     setCardList([...cardList, newCard]);
   };
 
-  useEffect(() => {
-    console.log(cardList);
-  }, [cardList]);
+  useEffect(() => {}, [cardList]);
 
   return (
     <WrapperPrincipal>
       <Columns>
         <AddButton onClick={addCard}>Went well</AddButton>
-        <ul>
-          {cardList.map(({ id, children, likes }: ICardApp) => (
-            <Card
-              id={id}
-              key={`item-${id}`}
-              variant="wentWell"
-              onClose={handerOnClose}
-              onLike={handleOnLike}
-              onEdit={handlerOnEdit}
-              likes={likes}
-            >
-              {children}
-            </Card>
-          ))}
-        </ul>
+        <CardList
+          items={cardList as ICard[]}
+          onLike={handleOnLike}
+          onClose={handerOnClose}
+          onEdit={handlerOnEdit}
+        />
       </Columns>
       <Columns>
         <AddButton onClick={() => {}}>To improve</AddButton>

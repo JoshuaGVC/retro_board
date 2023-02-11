@@ -2,59 +2,39 @@ import { AddButton } from "@components/AddButton";
 import { WrapperPrincipal } from "@components/WrapperPrincipal";
 import { Columns } from "./Home.styled";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { Card, ICard, TAction } from "@components/Card";
-import { ICardApp } from "./Home.d";
+import { useReducer } from "react";
+import { ICard } from "@components/Card";
 import { CardList } from "@components/CardList";
+import { cardReducer } from "../../reducers/cardReducer";
 
 const Home = () => {
-  const [cardList, setCardList] = useState<ICardApp[]>([]);
+  // const [cardList, setCardList] = useState<ICardApp[]>([]);
+  const [state, dispatch] = useReducer(cardReducer, []);
 
-  const handerOnClose = (id: string) => {
-    const newCArd = [...cardList];
-    const indexFound = newCArd.findIndex((item) => item.id === id);
-    newCArd.splice(indexFound, 1);
-    setCardList(newCArd);
+  const handlerOnClose = (id: string) => {
+    dispatch({ type: "remove", payload: { id } });
   };
 
   const handleOnLike = (id: string) => {
-    const newCard = [...cardList];
-    const indexFound = newCard.findIndex((item) => item.id === id);
-    const cardModify = newCard[indexFound];
-    const card = { ...cardModify, likes: cardModify.likes + 1 };
-    newCard.splice(indexFound, 1, card);
-    setCardList(newCard);
+    dispatch({ type: "liked", payload: { id } });
   };
 
   const handlerOnEdit = (id: string, text: string) => {
-    const newCard = [...cardList];
-    const indexFound = newCard.findIndex((item) => item.id === id);
-    const cardModify = newCard[indexFound];
-    const card = { ...cardModify, children: text };
-    newCard.splice(indexFound, 1, card);
-    setCardList(newCard);
+    dispatch({ type: "edition", payload: { id, text } });
   };
 
   const addCard = () => {
-    const newCard = {
-      id: crypto.randomUUID(),
-      variant: "wentWell" as TAction,
-      likes: 0,
-      children: "",
-    };
-    setCardList([...cardList, newCard]);
+    dispatch({ type: "add" });
   };
-
-  useEffect(() => {}, [cardList]);
 
   return (
     <WrapperPrincipal>
       <Columns>
         <AddButton onClick={addCard}>Went well</AddButton>
         <CardList
-          items={cardList as ICard[]}
+          items={state as ICard[]}
           onLike={handleOnLike}
-          onClose={handerOnClose}
+          onClose={handlerOnClose}
           onEdit={handlerOnEdit}
         />
       </Columns>

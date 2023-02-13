@@ -2,10 +2,10 @@ import { AddButton } from "@components/AddButton";
 import { WrapperPrincipal } from "@components/WrapperPrincipal";
 import { Columns } from "./Home.styled";
 import { Link } from "react-router-dom";
-import { useEffect, useReducer, useRef } from "react";
+import { Dispatch, useEffect, useReducer, useRef } from "react";
 import { ICard, TAction } from "@components/Card";
 import { CardList } from "@components/CardList";
-import { cardReducer } from "../../reducers/cardReducer";
+import { cardReducer, IAction } from "../../reducers/cardReducer";
 import { stringify } from "querystring";
 import { ICardApp } from "./Home.d";
 
@@ -20,76 +20,65 @@ const Home = () => {
 
   const init = useRef(false);
 
-  const handlerOnCloseWell = (id: string) => {
-    dispatchWell({ type: "remove", payload: { id } });
+  const addCard = (fn: Dispatch<IAction>, variant: TAction) => {
+    return () => {
+      fn({ type: "add", payload: { variant } });
+    };
   };
 
-  const handlerOnLikeWell = (id: string) => {
-    dispatchWell({ type: "liked", payload: { id } });
+  const handlerOnClose = (fn: Dispatch<IAction>, id: string) => {
+    return () => {
+      fn({ type: "remove", payload: { id } });
+    };
   };
 
-  const handlerOnEditWell = (id: string, text: string) => {
-    dispatchWell({ type: "edition", payload: { id, text } });
+  const handlerOnLike = (fn: Dispatch<IAction>, id: string) => {
+    return () => {
+      fn({ type: "liked", payload: { id } });
+    };
   };
 
-  const addCardWentWell = (variant: TAction) => {
-    dispatchWell({ type: "add", payload: { variant } });
+  const handlerOnEdit = (fn: Dispatch<IAction>, id: string, text: string) => {
+    return () => {
+      fn({ type: "edition", payload: { id, text } });
+    };
   };
 
-  const handlerOnCloseImprovements = (id: string) => {
-    dispatchImproveCArds({ type: "remove", payload: { id } });
-  };
-
-  const handlerOnLikeImprovements = (id: string) => {
-    dispatchImproveCArds({ type: "liked", payload: { id } });
-  };
-
-  const handlerOnEditImprovements = (id: string, text: string) => {
-    dispatchImproveCArds({ type: "edition", payload: { id, text } });
-  };
-
-  const addCardImprovements = (variant: TAction) => {
-    dispatchImproveCArds({
-      type: "add",
-      payload: { variant },
-    });
-  };
-
-  const handlerOnCloseActionsItems = (id: string) => {
-    dispatchActionItemCArds({ type: "remove", payload: { id } });
-  };
-
-  const handlerOnLikeActionsItems = (id: string) => {
-    dispatchActionItemCArds({ type: "liked", payload: { id } });
-  };
-
-  const handlerOnEditActionsItems = (id: string, text: string) => {
-    dispatchActionItemCArds({ type: "edition", payload: { id, text } });
-  };
-
-  const addCardActionsItems = (variant: TAction) => {
-    dispatchActionItemCArds({
-      type: "add",
-      payload: { variant },
-    });
-  };
-
-  const saveInLocalA = (cardsWell: ICardApp[]) => {
-    localStorage.setItem("cardsWell", JSON.stringify(cardsWell));
+  const saveInLocalA = (key: string, arr: ICardApp[]) => {
+    localStorage.setItem(key, JSON.stringify(arr));
   };
 
   useEffect(() => {
     if (init.current) {
-      saveInLocalA(wellCards);
+      saveInLocalA("cardWell", wellCards);
     }
   }, [wellCards]);
 
   useEffect(() => {
-    let myCards = localStorage.getItem("cardsWell");
+    if (init.current) {
+      saveInLocalA("cardImprovements", improveCArds);
+    }
+  }, [improveCArds]);
+
+  useEffect(() => {
+    if (init.current) {
+      saveInLocalA("cardActionsItems", actionItemCArds);
+    }
+  }, [actionItemCArds]);
+
+  const getAndSave = (key: string, fn: Dispatch<IAction>) => {
+    let myCards = localStorage.getItem(key);
     if (myCards) {
       const items = JSON.parse(myCards);
-      dispatchWell({ type: "addAll", payload: { list: items as ICardApp[] } });
+      fn({ type: "addAll", payload: { list: items as ICardApp[] } });
     }
+  };
+
+  useEffect(() => {
+    getAndSave("cardWell", dispatchWell);
+    getAndSave("cardImprovements", dispatchImproveCArds);
+    getAndSave("cardActionsItems", dispatchActionItemCArds);
+
     init.current = true;
   }, []);
 
@@ -98,31 +87,31 @@ const Home = () => {
       <Columns>
         <AddButton
           onClick={() => {
-            addCardWentWell("wentWell");
+            addCard(dispatchWell, "wentWell")();
           }}
         >
           Went well
         </AddButton>
         <CardList
           items={wellCards as ICard[]}
-          onLike={handlerOnLikeWell}
-          onClose={handlerOnCloseWell}
-          onEdit={handlerOnEditWell}
+          onLike={(id) => handlerOnLike(dispatchWell, id)()}
+          onClose={(id) => handlerOnClose(dispatchWell, id)()}
+          onEdit={(id, text) => handlerOnEdit(dispatchWell, id, text)()}
         />
       </Columns>
       <Columns>
         <AddButton
           onClick={() => {
-            addCardImprovements("improvements");
+            addCard(dispatchImproveCArds, "improvements")();
           }}
         >
           To improve
         </AddButton>
         <CardList
           items={improveCArds as ICard[]}
-          onLike={handlerOnLikeImprovements}
-          onClose={handlerOnCloseImprovements}
-          onEdit={handlerOnEditImprovements}
+          onLike={(id) => handlerOnLike(dispatchImproveCArds, id)()}
+          onClose={(id) => handlerOnClose(dispatchImproveCArds, id)()}
+          onEdit={(id, text) => handlerOnEdit(dispatchImproveCArds, id, text)()}
         />
 
         {/* <Card variant="improvements">Improve design of said board</Card> */}
@@ -130,16 +119,18 @@ const Home = () => {
       <Columns>
         <AddButton
           onClick={() => {
-            addCardActionsItems("actionsItems");
+            addCard(dispatchActionItemCArds, "actionsItems")();
           }}
         >
           Action Items
         </AddButton>
         <CardList
           items={actionItemCArds as ICard[]}
-          onLike={handlerOnLikeActionsItems}
-          onClose={handlerOnCloseActionsItems}
-          onEdit={handlerOnEditActionsItems}
+          onLike={(id) => handlerOnLike(dispatchActionItemCArds, id)()}
+          onClose={(id) => handlerOnClose(dispatchActionItemCArds, id)()}
+          onEdit={(id, text) =>
+            handlerOnEdit(dispatchActionItemCArds, id, text)()
+          }
         />
 
         {/* <Card variant="actionsItems">Make sure I follow up</Card> */}

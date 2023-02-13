@@ -74,23 +74,19 @@ const Home = () => {
     });
   };
 
-  const saveInLocal = (cardsWell: ICardApp[]) => {
-    localStorage.setItem("cards", JSON.stringify(cardsWell));
+  const saveInLocalA = (cardsWell: ICardApp[]) => {
+    localStorage.setItem("cardsWell", JSON.stringify(cardsWell));
   };
 
   useEffect(() => {
     if (init.current) {
-      console.log("entre");
-      saveInLocal(wellCards);
-    } else {
-      console.log("no entre");
+      saveInLocalA(wellCards);
     }
   }, [wellCards]);
 
   useEffect(() => {
-    let myCards = localStorage.getItem("cards");
+    let myCards = localStorage.getItem("cardsWell");
     if (myCards) {
-      console.log("hola entre", myCards);
       const items = JSON.parse(myCards);
       dispatchWell({ type: "addAll", payload: { list: items as ICardApp[] } });
     }

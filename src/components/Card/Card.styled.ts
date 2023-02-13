@@ -1,3 +1,4 @@
+import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
 import { TAction } from "./Card.d";
 
@@ -16,12 +17,24 @@ interface ICardBackground {
   color: TAction;
 }
 
+const slideUp = keyframes`
+  from {
+      opacity: 0;
+      transform: translateY(80px);
+    }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+`;
+
 export const Card = styled.li<ICardBackground>`
   box-sizing: border-box;
   background-color: ${(props) => getColor(props.color)[0]};
   min-height: 104px;
   width: 350px;
-  margin-bottom: 50px;
+  margin-bottom: 25px;
   border: none;
   font-family: "Sulphur Point";
   font-style: normal;
@@ -34,10 +47,12 @@ export const Card = styled.li<ICardBackground>`
   justify-content: space-between;
   box-shadow: 5px 5px 0px ${(props) => getColor(props.color)[1]};
   position: relative;
+  animation: ${slideUp} 0.25s ease;
 `;
 
 export const WrapperText = styled.div`
   width: 82.8571%;
+  outline: none;
 `;
 
 export const ButtonX = styled.button`

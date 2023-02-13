@@ -2,8 +2,9 @@ import { TAction } from "../components/Card";
 import { ICardApp } from "../pages/Home/Home.d";
 
 export interface IPayload {
-  id: string;
+  id?: string;
   text?: string;
+  variant?: TAction;
 }
 
 type TType = "add" | "remove" | "liked" | `edition`;
@@ -22,7 +23,7 @@ export const cardReducer = (state: ICardApp[], action: IAction) => {
         ...state,
         {
           id: crypto.randomUUID(),
-          variant: "wentWell" as TAction,
+          variant: action.payload?.variant as TAction,
           likes: 0,
           children: "",
         },

@@ -5,9 +5,10 @@ export interface IPayload {
   id?: string;
   text?: string;
   variant?: TAction;
+  list?: ICardApp[];
 }
 
-type TType = "add" | "remove" | "liked" | `edition`;
+type TType = "add" | "remove" | "liked" | "edition" | "addAll";
 
 export interface IAction {
   type: TType;
@@ -50,8 +51,11 @@ export const cardReducer = (state: ICardApp[], action: IAction) => {
         (item) => item.id === action.payload?.id
       );
       const cardModify2 = newState[positionIndex];
-      const card = { ...cardModify2, children: cardModify2.children };
+      const card = { ...cardModify2, children: action.payload?.text! };
       newState.splice(positionIndex, 1, card);
       return newState;
+
+    case "addAll":
+      return action.payload!.list!;
   }
 };

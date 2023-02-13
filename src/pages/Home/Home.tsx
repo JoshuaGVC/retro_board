@@ -2,7 +2,7 @@ import { AddButton } from "@components/AddButton";
 import { WrapperPrincipal } from "@components/WrapperPrincipal";
 import { Columns } from "./Home.styled";
 import { Link } from "react-router-dom";
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useRef } from "react";
 import { ICard, TAction } from "@components/Card";
 import { CardList } from "@components/CardList";
 import { cardReducer } from "../../reducers/cardReducer";
@@ -17,6 +17,8 @@ const Home = () => {
     cardReducer,
     []
   );
+
+  const init = useRef(false);
 
   const handlerOnCloseWell = (id: string) => {
     dispatchWell({ type: "remove", payload: { id } });
@@ -72,13 +74,28 @@ const Home = () => {
     });
   };
 
-  // const saveInLocal = () => {
-  //   localStorage.setItem("cards", JSON.stringify(wellCards));
-  // };
+  const saveInLocal = (cardsWell: ICardApp[]) => {
+    localStorage.setItem("cards", JSON.stringify(cardsWell));
+  };
 
-  // useEffect(() => {
-  //   saveInLocal();
-  // }, []);
+  useEffect(() => {
+    if (init.current) {
+      console.log("entre");
+      saveInLocal(wellCards);
+    } else {
+      console.log("no entre");
+    }
+  }, [wellCards]);
+
+  useEffect(() => {
+    let myCards = localStorage.getItem("cards");
+    if (myCards) {
+      console.log("hola entre", myCards);
+      const items = JSON.parse(myCards);
+      dispatchWell({ type: "addAll", payload: { list: items as ICardApp[] } });
+    }
+    init.current = true;
+  }, []);
 
   return (
     <WrapperPrincipal>

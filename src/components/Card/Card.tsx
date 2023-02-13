@@ -31,6 +31,7 @@ const Card: FC<ICard> = ({
   const onBlurCard = () => {
     const newText = (elText.current as HTMLDivElement).textContent;
     if (newText !== text) {
+      console.log(newText);
       setText(newText);
       onEdit(id, newText as string);
     }

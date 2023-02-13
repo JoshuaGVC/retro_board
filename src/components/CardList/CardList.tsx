@@ -3,12 +3,7 @@ import { ICard } from "@components/Card/Card.d";
 import { ICardList } from "@components/CardList/";
 import { FC } from "react";
 
-const CardList: FC<ICardList> = ({
-  items,
-  onClose: close,
-  onEdit: edit,
-  onLike: like,
-}) => {
+const CardList: FC<ICardList> = ({ items, onClose, onEdit, onLike }) => {
   return (
     <ul>
       {items.map(({ id, variant, children, likes }: ICard) => (
@@ -16,9 +11,9 @@ const CardList: FC<ICardList> = ({
           id={id}
           key={`item-${id}`}
           variant={variant}
-          onClose={close}
-          onLike={like}
-          onEdit={edit}
+          onClose={onClose}
+          onLike={onLike}
+          onEdit={onEdit}
           likes={likes}
         >
           {children}

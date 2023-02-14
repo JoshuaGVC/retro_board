@@ -10527,7 +10527,7 @@ const _m = be.button`
     transform: translateY(4px);
   }
 `,
-  Pm = "/assets/mas-c7beeb70.svg",
+  Pm = "https://joshuagvc.github.io/retro_board/assets/mas-c7beeb70.svg",
   Ao = ({ children: e, onClick: t }) =>
     It(_m, {
       onClick: t,
@@ -10629,8 +10629,8 @@ const _m = be.button`
   margin-right: 7px;
   display: block;
 `,
-  $m = "/assets/equiz-c51ca066.svg",
-  Fm = "/assets/clapping-ac216e2e.svg",
+  $m = "https://joshuagvc.github.io/retro_board/assets/equiz-c51ca066.svg",
+  Fm = "https://joshuagvc.github.io/retro_board/assets/clapping-ac216e2e.svg",
   Dm = ({
     children: e,
     variant: t,

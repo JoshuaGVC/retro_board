@@ -10527,7 +10527,7 @@ const _m = be.button`
     transform: translateY(4px);
   }
 `,
-  Pm = "/assets/mas.svg",
+  Pm = "/assets/mas-c7beeb70.svg",
   Ao = ({ children: e, onClick: t }) =>
     It(_m, {
       onClick: t,
@@ -10629,8 +10629,8 @@ const _m = be.button`
   margin-right: 7px;
   display: block;
 `,
-  $m = "/assets/equiz.svg",
-  Fm = "/assets/clapping.svg",
+  $m = "/assets/equiz-c51ca066.svg",
+  Fm = "/assets/clapping-ac216e2e.svg",
   Dm = ({
     children: e,
     variant: t,

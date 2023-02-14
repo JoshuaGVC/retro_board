@@ -2,7 +2,7 @@
 
 ![retro_board](./retro_board.png)
 
-[link demo]()
+[link demo](https://joshuagvc.github.io/retro_board)
 
 Retro_Board-App es un aplicativo web muy util para usar en las metodologias agiles por ejemplo el metodo Scrum, consiste de 3 columnas, la primera columna van los cards verdes, que son las cosas que salieron bien en el spring anterior, en la segunda columna donde valas los card amarillos son los puntos que se pueden mejorar y por ultimo en la tercera columna van las cosas que se deberian de hacer en el siguiente spring teniendo en cuenta lo que pusieron en las dos primeras columnas y por lo general solo las administra el Scrum Master.
 

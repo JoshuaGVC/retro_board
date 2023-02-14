@@ -1,5 +1,5 @@
 import { TAction } from "../components/Card";
-import { ICardApp } from "../pages/Home/Home.d";
+import { ICardApp } from "../App.d";
 
 export interface IPayload {
   id?: string;

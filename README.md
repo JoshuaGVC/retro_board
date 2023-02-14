@@ -1,27 +1,21 @@
-# Projecto base para una APP con React JS + Typescript y Material UI
+# Retro_Board-App
 
-Este repositorio contiene todo lo que necesitas para iniciar tu proyecto con React JS de forma más profesional, reune varias otras librerías para que puedas desarrollar tu APP facil y de forma rápida.
+![retro_board](./retro_board.png)
 
-### Contenido
+[link demo]()
 
-- [Vite JS](https://vitejs.dev): Como empaquetador del proyecto.
-- [React JS](https://reactjs.org): Fantástica librería para el UI
-- [Typescript](https://www.typescriptlang.org): El fantástico superset para darle tipádo a javascript
-- [Vitest](https://vitest.dev/): Para pruebas unitarias.
-- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/): Para ayudar a Vitest a probar componentes de React.
-- [Materia UI](https://mui.com): Como el framework de componentes para React.
-- [React Router DOM](https://reactrouter.com): Para crear las rutas que necesitemos.
-- y finalmente [Prettier](https://prettier.io/) y [ESLint](https://eslint.org) para el formateo y verificación de código.
+Retro_Board-App es un aplicativo web muy util para usar en las metodologias agiles por ejemplo el metodo Scrum, consiste de 3 columnas, la primera columna van los cards verdes, que son las cosas que salieron bien en el spring anterior, en la segunda columna donde valas los card amarillos son los puntos que se pueden mejorar y por ultimo en la tercera columna van las cosas que se deberian de hacer en el siguiente spring teniendo en cuenta lo que pusieron en las dos primeras columnas y por lo general solo las administra el Scrum Master.
 
-Adicionalmente tiene **alias para cada una de las carpetas comunes** que se usan en todo proyecto, es decir, un alias para la carpeta 'components' otro para la carpeta assets, otro màs para la carpeta services, y así así, solo hay que prefixear los nombres de las carpetas con un arroba. en el archivo **'vite.config.ts'** se encuentran todos los alias creados
+## ¿Como usar la Retro_Board-App?
 
-### Instrucciones:
+- Hacer click en cualquiera de los 3 botones que "Went well", "To improve" o "Action item" para agregar un card debajo del boton.
 
-Clonar y usar 😉
+- haciendo doble click en el card agregado, podras agregar el texto que desees contribuir y hacer click fuera del card para guardar el texto escrito (hacer blur)
 
-### Cosas a tomar en cuenta
+- podras dar like al card que desees haciendo click en las manitos en la parte inferior derecho del card.
 
-- He agreado un simple un test unitario al componente 'Button', solo como ejemplo.
-- Yo uso [yarn](https://yarnpkg.com/) como manejador de paquetes, si usas [npm](https://www.npmjs.com) tendrás que borrar el archivo yarn.lock para evitar conflictos.
+- podras eliminar un card haciendo click en el simbolo "X" que se encuentra en la parte superior derecha del card.
 
-> Este repo se actualiza constantemente mejorando sus configuraciones y actualizando los paquetes usados.
+### Datos de la app
+
+Esta app fue desarrollada con React, fue una programacion muy interesante donde se tuvo que manejar la data por separado, pero a su vez integrarlas de alguna manera con ayuda de un "useReducer" aplicandolo de una manera simple, pero facil de entender, se implemento el guardado del local storage para no perder los cambios, espero que les sirva de ejemplo este repositorio.

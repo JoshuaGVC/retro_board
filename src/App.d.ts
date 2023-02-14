@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { ICard } from "../../components/Card";
+import { ICard } from "./components/Card";
 
 export interface ICardApp
   extends Pick<ICard, "id" | "variant" | "likes" | "children"> {}
